@@ -45,7 +45,7 @@ public class SaleChanceController extends BaseController {
 	}
 	
 	@RequestMapping("update")
-	@ResponseBody 
+	@ResponseBody    
 	public ResultInfo update(SaleChance saleChance) {
 		saleChanceService.update(saleChance);
 		return success("修改成功");
