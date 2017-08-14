@@ -16,6 +16,7 @@ import com.shsxt.crm.dto.SaleChanceQuery;
 import com.shsxt.crm.model.SaleChance;
 import com.shsxt.crm.service.SaleChanceService;
 import com.shsxt.crm.util.CookieUtil;
+import com.sun.istack.internal.logging.Logger;
 
 @Controller
 @RequestMapping("sale_chance")
@@ -47,6 +48,7 @@ public class SaleChanceController extends BaseController {
 	@RequestMapping("update")
 	@ResponseBody    
 	public ResultInfo update(SaleChance saleChance) {
+		System.out.println("冲突吧Git");
 		saleChanceService.update(saleChance);
 		return success("修改成功");
 	}
