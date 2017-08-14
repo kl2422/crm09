@@ -12,7 +12,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.miemiedev.mybatis.paginator.domain.Order;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.github.miemiedev.mybatis.paginator.domain.Paginator;
@@ -32,20 +31,8 @@ public class SaleChanceService {
 
 	public Map<String, Object> selectForPage(SaleChanceQuery query) {
 		
-		// 构建一个分页对象
-		Integer page = query.getPage();
-		if (page == null) {
-			page = 1;
-		}
-		Integer pageSize = query.getRows();
-		if (pageSize == null) {
-			pageSize = 10;
-		}
-		String sort = query.getSort();
-		if (StringUtils.isBlank(sort)) {
-			sort = "id.desc"; // 数据库字段.desc/asc
-		}
-		PageBounds pageBounds = new PageBounds(page, pageSize, Order.formString(sort));
+		// 构建分页对象
+		PageBounds pageBounds = query.buildPageBounds();
 		
 		// 查询
 		List<SaleChance> saleChances = saleChanceDao.selectForPage(query, pageBounds);
