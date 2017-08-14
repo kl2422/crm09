@@ -1,43 +1,40 @@
-function searchSaleChance() {
-	var data = {
-			customerName: $("#s_customerName").val(),
-			overview: $("#s_overview").val(),
-			devResult:$("#s_devResult").combobox('getValue')
-	}
-	$("#dg").datagrid('load', data);
-}
-
-function formatDevResult(val, row) {
-	switch (val) {
-		case 0:
-			return "未开发";
-		case 1:
-			return "开发中";
-		case 2:
-			return "开发成功";
-		case 3:
-			return "开发失败";
+// 格式化开发状态
+function formatDevResult(value) {
+	if (value == null || value == 0) {
+		return "未开发";
+	} else if (value == 1) {
+		return "开发中";
+	} else if (value == 2) {
+		return "开发完成";
+	} else if (value == 3) {
+		return "开发失败";
 	}
 }
 
-function formatOptBtn(val, row) {
-	var devResult = row.devResult;
-	if (devResult < 1 ) {
-		return '<a href="javascript:openDev(0, '+ row.id +')" >开发</a>';
+// 显示操作方式
+function formatOptBtn (value, row) {
+	if (row.devResult < 2) {
+		return "<a href='javascript:openDev(0, "+ row.id +")'>开发</a>"
 	} else {
-		return '<a href="javascript:openDev(1, '+ row.id +')" >查看详情</a>';
+		return "<a href='javascript:openDev(1, "+ row.id +")' >查看详情</a>"
 	}
 }
 
-function openDev (devStatus, saleChanceId) {
-	var text = "";
-	if (devStatus == 0) { // 开发
-		text = "客户开发计划项管理";
-	} else {
-		text = "查看客户开发计划项";
-	}
-	//var url = "../cus_dev_plan/index?saleChanceId=" + saleChanceId;
-	var url = ctx + "cus_dev_plan/index?saleChanceId=" + saleChanceId + "&show=" + devStatus; 
-	window.parent.openTab(text, url, "icon-khkfjh");
+// 开发、开发详情
+function openDev(type, id) {
+	// ctx是定义在common.header.ftl里面的全局变量
+	window.parent.openTab("查看客户开发计划项", ctx + "cus_dev_plan/index?saleChanceId=" + id + "&type=" + type, "icon-khkfjh");
 	
+}
+
+// 搜索
+function searchSaleChance() {
+	var customerName = $("#s_customerName").val();
+	var overview = $("#s_overview").val();
+	var devResult = $("#s_devresult").combobox('getValue');
+	$('#dg').datagrid('reload',{
+		customerName: customerName,
+		overview: overview,
+		devResult: devResult
+	});
 }

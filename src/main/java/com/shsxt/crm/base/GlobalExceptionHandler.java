@@ -30,7 +30,8 @@ public class GlobalExceptionHandler extends BaseController {
 //	@ResponseBody
 	public ResultInfo handlerException(Exception paramException) {
 //		return failure(paramException);
-		return null;
+		logger.error("系统异常：{}", paramException);
+		return failure("系统异常");
 	}
 //	
 }

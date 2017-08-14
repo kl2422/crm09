@@ -19,7 +19,7 @@ public class SaleChance extends BaseModel {
 	private String assignMan;
 	private Date assignTime;
 	private Integer state;
-	private Integer devResult;
+	private Integer devResult; // 0=未开发 1=已开发 2=开发完成 3=开发失败
 	
 	public String getChanceSource() {
 		return chanceSource;

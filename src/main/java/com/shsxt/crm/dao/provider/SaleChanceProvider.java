@@ -12,7 +12,7 @@ public class SaleChanceProvider {
 	
 	private static Logger logger = LoggerFactory.getLogger(SaleChanceProvider.class);
 	private static final String COLUMNS = "t.id, t.customer_id, t.customer_name, t.overview, t.link_man, t.link_phone, "
-			+ " t.create_man, t.create_date, t.assign_man,t.assign_time,t.state, t.cgjl, t.description, t.chance_source";
+			+ " t.create_man, t.create_date, t.assign_man,t.assign_time,t.state, t.cgjl, t.description, t.chance_source, t.dev_result";
 	
 	public String selectForPage(final SaleChanceQuery query) {
 		
@@ -32,6 +32,9 @@ public class SaleChanceProvider {
 			}
 			if (query.getState() != null) {
 				AND().WHERE("state = #{state}");
+			}
+			if (query.getDevResult() != null) {
+				AND().WHERE("dev_result = #{devResult}");
 			}
 			
 		}}.toString();

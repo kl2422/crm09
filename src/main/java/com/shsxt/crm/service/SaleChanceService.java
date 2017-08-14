@@ -127,6 +127,37 @@ public class SaleChanceService {
 	}
 	
 	
+	/**
+	 * 删除
+	 * @param ids
+	 */
+	public void delete(String ids) {
+		// 参数验证
+		AssertUtil.isNotEmpty(ids, "请选择记录进行删除");
+		// 执行sql
+		saleChanceDao.delete(ids);
+	}
+	
+	/**
+	 * 根据主键ID获取营销机会信息
+	 * @param saleChanceId
+	 * @return
+	 */
+	public SaleChance findById(Integer saleChanceId) {
+		AssertUtil.intIsNotEmpty(saleChanceId, "请选择营销机会进行操作");
+		SaleChance saleChance = saleChanceDao.findById(saleChanceId);
+		return saleChance;
+	}
+	
+	/**
+	 * 更新开发状态
+	 * @param saleChanceId
+	 * @param devResult
+	 */
+	public void updateDevResult(Integer saleChanceId, int devResult) {
+		AssertUtil.intIsNotEmpty(saleChanceId, "请选择营销机会进行操作");
+		saleChanceDao.updateDevResult(saleChanceId, devResult);
+	}
 	
 	/**
 	 * 基本参数验证
@@ -186,18 +217,4 @@ public class SaleChanceService {
 		saleChance.setAssignTime(assignTime);
 		saleChance.setState(state);
 	}
-	
-	/**
-	 * 删除
-	 * @param ids
-	 */
-	public void delete(String ids) {
-		// 参数验证
-		AssertUtil.isNotEmpty(ids, "请选择记录进行删除");
-		// 执行sql
-		saleChanceDao.delete(ids);
-	}
-	
-	
-	
 }
