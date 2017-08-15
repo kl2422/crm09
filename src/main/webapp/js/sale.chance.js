@@ -39,7 +39,7 @@ function saveSaleChance() {
 	$("#customerName").val(customerName);
 	var id = $("#id").val();
 	var url = "add";
-	if (id != null) {
+	if (id != null && $.trim(id).length > 0 && !isNaN(id)) {
 		url = "update";
 	}
 	$("#fm").form('submit', {

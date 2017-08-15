@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shsxt.crm.dao.ModuleDao">
+
+    <sql id="Module_Columns">
+        id, module_name, module_style, url, parent_id, grade, orders, tree_path,
+        create_date, update_date, is_valid, opt_value
+    </sql>
+
+    <select id="selectForPage" resultType="module">
+        select <include refid="Module_Columns" /> from t_module
+        <where>
+            is_valid = 1
+        </where>
+        order by id
+    </select>
+
+    <select id="findByModuleName" resultType="module">
+        select <include refid="Module_Columns" /> from t_module
+        <where>
+            is_valid = 1
+            AND module_name = #{moduleName}
+            AND parent_id = #{parentId}
+        </where>
+    </select>
+    
+   <select id="findByOptValue" resultType="module">
+        select <include refid="Module_Columns" /> from t_module
+        <where>
+            is_valid = 1
+            AND opt_value = #{optValue}
+        </where>
+    </select>
+
+    <select id="findById" resultType="module">
+        select <include refid="Module_Columns" /> from t_module
+        <where>
+            is_valid = 1 and id = #{id}
+        </where>
+    </select>
+    
+    <select id="findByIds" resultType="module">
+        select <include refid="Module_Columns" /> from t_module
+        <where>
+            is_valid = 1 and id in (${ids})
+        </where>
+         order by grade desc
+    </select>
+
+    <insert id="insert">
+        insert into t_module (
+          module_name, module_style, url, parent_id, grade, orders, tree_path,
+          create_date, update_date, is_valid, opt_value
+        ) values(
+          #{moduleName}, #{moduleStyle}, #{url}, #{parentId}, #{grade}, #{orders}, #{treePath},
+           now(), now(), 1, #{optValue}
+        )
+    </insert>
+
+    <update id="update" >
+        update t_module
+        <set>
+            <if test="@Ognl@isNotEmpty(moduleName)">
+                module_name = #{moduleName},
+            </if>
+            <if test="@Ognl@isNotEmpty(moduleStyle)">
+                module_style = #{moduleStyle},
+            </if>
+            <if test="@Ognl@isNotEmpty(url)">
+                url = #{url},
+            </if>
+            <if test="@Ognl@isNotEmpty(parentId)">
+                parent_id = #{parentId},
+            </if>
+            <if test="@Ognl@isNotEmpty(grade)">
+                grade = #{grade},
+            </if>
+            <if test="@Ognl@isNotEmpty(orders)">
+                orders = #{orders},
+            </if>
+            <if test="@Ognl@isNotEmpty(treePath)">
+                tree_path = #{treePath},
+            </if>
+
+            <if test="@Ognl@isNotEmpty(optValue)">
+                opt_value = #{optValue},
+            </if>
+            UPDATE_DATE = now()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="deleteBatch" >
+        update t_module set is_valid = 0, update_date = now() where id IN (${ids})
+    </update>
+
+</mapper>

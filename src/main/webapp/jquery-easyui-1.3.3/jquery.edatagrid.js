@@ -283,7 +283,7 @@
 			});
 		}
 	};
-	
+	// main函数
 	$.fn.edatagrid.defaults = $.extend({}, $.fn.datagrid.defaults, {
 		editing: true,
 		editIndex: -1,
