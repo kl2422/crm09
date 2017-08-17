@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <#include "include/common.header.ftl" >
+    <#include "common/common.header.ftl" >
 </head>
 <body style="margin: 1px">
 	<table id="dg" title="角色管理" class="easyui-datagrid"

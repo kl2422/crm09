@@ -22,6 +22,15 @@ $(document).ready(function () {
 	
 });
 
+function formatParentName(value) {
+	if (value != null) {
+		return value.moduleName;
+	} else {
+		return "";
+	}
+	
+}
+
 // 格式化
 function formatGrade (value) {
 	switch (value) {
@@ -36,6 +45,7 @@ function formatGrade (value) {
 		break;
 	}
 }
+
 
 // 弹出添加框
 function openAddDialog() {

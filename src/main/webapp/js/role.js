@@ -61,7 +61,10 @@ function deleteRoles() {
 
     var strIds=[];
     var selectedRows = $("#dg").datagrid('getSelections');
-    console.log(selectedRows);
+    if (selectedRows.length == 0) {
+		$.messager.alert("提示", "请选择行进行删除");
+		return;
+	}
     for(var i=0; i<selectedRows.length; i++) {
         strIds.push(selectedRows[i].id);
     }

@@ -33,4 +33,14 @@ function cancelRow() {
 function updateSaleChanceDevResult(devResult) {
 	var saleChanceId = $("#saleChanceId").val();
 	// ajax请求后台接口 修改sale_chance的dev_result
+	var param = {};
+    param.saleChanceId = $("#saleChanceId").val();
+    param.devResult = devResult;
+    $.post("update_dev_result", param, function(result) {
+        if(result.resultCode == 1) {
+            $.messager.alert("系统提示", "操作成功！");
+        } else {
+            $.messager.alert("系统提示","操作失败！");
+        }
+    });
 }

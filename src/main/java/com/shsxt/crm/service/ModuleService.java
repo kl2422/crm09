@@ -18,6 +18,7 @@ import com.shsxt.crm.dao.ModuleDao;
 import com.shsxt.crm.exception.ParamException;
 import com.shsxt.crm.model.Module;
 import com.shsxt.crm.util.AssertUtil;
+import com.shsxt.crm.vo.ModuleVO;
 
 @Service
 public class ModuleService {
@@ -115,7 +116,7 @@ public class ModuleService {
 		}
 		
 		// 先根据Id查询此模块
-		Module moduleFromDB = moduleDao.findById(id);
+		Module moduleFromDB = findById(id);
 		AssertUtil.notNull(moduleFromDB, "此模块不存在，请重新选择");
 		
 		// 构建tree_path: 先验证数据库中的记录的父级是否等于传入的父级
@@ -158,7 +159,38 @@ public class ModuleService {
 	public void delete(String ids) {
 		AssertUtil.isNotEmpty(ids, "请选择记录进行删除");
 		moduleDao.deleteBatch(ids);
-		
+	}
+	
+	/**
+	 * 查询所有的模块
+	 * @param roleId
+	 * @return
+	 */
+	public List<ModuleVO> findAll(Integer roleId) {
+		List<ModuleVO> modules = moduleDao.findAll();
+		List<Integer> roleModuleIds = moduleDao.findByRoleId(roleId);
+		if (roleModuleIds == null || roleModuleIds.size() < 1) {
+			return modules;
+		}
+		for (ModuleVO moduleVO : modules) {
+			if (!roleModuleIds.contains(moduleVO.getId())) {
+				continue;
+			}
+			moduleVO.setChecked(true);
+		}
+		return modules;
+	}
+	
+	/**
+	 * 根据ID查询数据
+	 * @param id
+	 * @return
+	 */
+	public Module findById(Integer id) {
+		AssertUtil.intIsNotEmpty(id, "请选择模块");
+		Module module = moduleDao.findById(id);
+		AssertUtil.notNull(module, "此模块不存在，请重新选择");
+		return module;
 	}
 	
 	/**
@@ -193,7 +225,7 @@ public class ModuleService {
 		}
 		String treePath = null;
 		// 现获取父级
-		Module parentModule = moduleDao.findById(parentId);
+		Module parentModule = findById(parentId);
 		AssertUtil.notNull(parentModule, "该父级不存在，请重新选择");
 		String parentTreePath = parentModule.getTreePath();
 		if (StringUtils.isNoneBlank(parentTreePath)) { 

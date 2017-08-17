@@ -1,3 +1,13 @@
+function formatRoleName(value) {
+	if (value == null || value.length < 1) {
+		return "";
+	} 
+	var roleNames = [];
+	for(var i = 0; i < value.length; i++) {
+		roleNames.push(value[i].roleName);
+	}
+	return roleNames.join(',');
+}
 function searchUser() {
     $("#dg").datagrid('load', {
         "userName":$("#s_userName").val()
@@ -52,6 +62,8 @@ function saveUser() {
 }
 
 function resetValue() {
+//	$("#fm").form('reset');
+//	$("#fm").form('clear');
     $("#userName").val("");
     $("#password").val("");
     $("#trueName").val("");

@@ -62,7 +62,7 @@
       
     <!-- 作用Shcema的方式配置事务, 这里是把事务设置到了service层 这里就用到了spring aop-->  
     <aop:config>  
-        <aop:pointcut id="servicePointcut" expression="execution(* com.*.*.service.*(..))" />  
+        <aop:pointcut id="servicePointcut" expression="execution(* com.*.*.service.*.*(..))" />
         <aop:advisor advice-ref="txAdvice" pointcut-ref="servicePointcut"/>  
     </aop:config>  
     

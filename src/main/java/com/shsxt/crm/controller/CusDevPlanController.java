@@ -62,4 +62,11 @@ public class CusDevPlanController extends BaseController {
 		return success("删除成功");
 	}
 	
+	@RequestMapping("update_dev_result")
+	@ResponseBody
+	public ResultInfo updateDevResult(Integer saleChanceId, Integer devResult) {
+		saleChanceService.updateDevResult(saleChanceId, devResult);
+		return success("更新成功");
+	}
+	
 }
