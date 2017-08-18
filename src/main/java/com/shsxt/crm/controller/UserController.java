@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,17 +27,16 @@ public class UserController extends BaseController {
 	@Autowired
 	private UserService userService;
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping("login")
 	@ResponseBody
-	public ResultInfo login(String userName, String password) {
+	public ResultInfo login(String userName, String password, HttpSession session) {
 		ResultInfo result = null;
-//		try {
-			UserLoginIdentity userLoginIdentity = userService.login(userName, password);
-			result = success(userLoginIdentity);
-//		} catch (ParamException e) {
-////			result = new ResultInfo(Constant.ERROR_CODE, e.getMessage(), "操作失败");
-//			result = failure(e);
-//		}
+		Object[] obj = userService.login(userName, password);
+		UserLoginIdentity userLoginIdentity = (UserLoginIdentity) obj[0];
+		result = success(userLoginIdentity);
+		List<String> permissions = (List<String>) obj[1];
+		session.setAttribute("permissions", permissions);
 		return result;
 	}
 	
@@ -86,7 +86,7 @@ public class UserController extends BaseController {
 		userService.deleteBatch(ids);
 		return success("删除成功");
 	}
-
+	
 	@RequestMapping("update_password")
 	public @ResponseBody Object updatePassword(String oldPassword,
 			String newPassword, String confirmPassword, HttpServletRequest request) {

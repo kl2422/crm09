@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.shsxt.crm.annotation.RequirePermissions;
 import com.shsxt.crm.base.BaseController;
 import com.shsxt.crm.util.CookieUtil;
 
@@ -18,6 +19,7 @@ public class IndexController extends BaseController {
 	}
 	
 	@RequestMapping("main")
+	@RequirePermissions(permission = "1010")
 	public String main(HttpServletRequest request, Model model) {
 		
 		String userName = CookieUtil.getCookieValue(request, "userName");

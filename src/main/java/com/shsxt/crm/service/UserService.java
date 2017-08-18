@@ -32,12 +32,15 @@ public class UserService {
 	@Autowired
 	private UserRoleDao userRoleDao;
 	
+	@Autowired
+	private PermissionService permissionService;
+	
 	/**
 	 * 登录
 	 * @param userName
 	 * @param password
 	 */
-	public UserLoginIdentity login(String userName, String password) {
+	public Object[] login(String userName, String password) {
 //		Map<String, Object> result = new HashMap<>();
 		// 基本参数验证
 		if(StringUtils.isBlank(userName)) {
@@ -80,7 +83,11 @@ public class UserService {
 //		result.put("resultMessage", "登录成功");
 //		result.put("result", userLoginIdentity);
 //		ResultInfo result = new ResultInfo(Constant.SUCCESS_CODE, "登录成功", userLoginIdentity);
-		return userLoginIdentity;
+		
+		// 获取登录用户的权限
+		List<String> permissions = permissionService.findUserPermissions(user.getId());
+		
+		return new Object[]{userLoginIdentity, permissions};
 	}
 
 	public List<UserVO> findCutomerManager() {
