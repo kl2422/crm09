@@ -6,6 +6,8 @@ function resetValue(){
     $("#customer").val("");
     $("#overview").val("");
     $("#serviceRequest").val("");
+//    $("#fm").form("clear");
+//    $("#fm").form("reset");
 }
 
 function saveCustomerService(){

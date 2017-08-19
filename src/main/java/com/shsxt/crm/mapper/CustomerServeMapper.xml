@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shsxt.crm.dao.CustomerServeDao">
+
+    <sql id="CustomerServe_Columns">
+        id,serve_type,overview,customer,state,service_request,create_people,assigner,assign_time,
+        service_proce,service_proce_people,service_proce_time,service_proce_result,myd,is_valid,
+        update_date,create_date
+    </sql>
+
+    <insert id="insert" parameterType="CustomerServe">
+        insert into t_customer_serve (
+          serve_type,overview,customer,state,service_request,create_people,assigner,assign_time,
+          service_proce,service_proce_people,service_proce_time,service_proce_result,myd,is_valid,
+          update_date, create_date
+        ) values(
+          #{serveType},#{overview},#{customer},#{state},#{serviceRequest},#{createPeople},#{assigner}, #{assignTime},
+          #{serviceProce},#{serviceProcePeople},#{serviceProceTime},#{serviceProceResult},#{myd}, 1, now(), now()
+        )
+    </insert>
+
+    <select id="selectForPage" resultType="CustomerServe" >
+        select <include refid="CustomerServe_Columns"/> from t_customer_serve
+        <where>
+            is_valid = 1
+            
+            <if test="@Ognl@isNotEmpty(customer)">
+                and customer like '%${customer}%'
+            </if>
+            <if test="@Ognl@isNotEmpty(overview)">
+                and overview like '%${overview}%'
+            </if>
+            <if test="@Ognl@isNotEmpty(serveType)">
+                and serve_type = #{serveType}
+            </if>
+            <if test="@Ognl@isNotEmpty(stateStr)">
+                and state = #{stateStr}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimefrom)">
+                and create_date &gt;= #{createTimefrom}
+            </if>
+            <if test="@Ognl@isNotEmpty(createTimeto)">
+                and create_date &lt;= #{createTimeto}
+            </if> 
+        </where>
+    </select>
+
+    <update id="update" parameterType="CustomerServe">
+        update t_customer_serve
+        <set>
+            <if test="@Ognl@isNotEmpty(serveType)">
+                serve_type = #{serveType},
+            </if>
+            <if test="@Ognl@isNotEmpty(overview)">
+                overview = #{overview},
+            </if>
+            <if test="@Ognl@isNotEmpty(customer)">
+                customer = #{customer},
+            </if>
+            <if test="@Ognl@isNotEmpty(state)">
+                state = #{state},
+            </if>
+            <if test="@Ognl@isNotEmpty(serviceRequest)">
+                service_request = #{serviceRequest},
+            </if>
+            <if test="@Ognl@isNotEmpty(assigner)">
+                assigner = #{assigner},
+            </if>
+            <if test="assignTime!=null ">
+                assign_time = #{assignTime},
+            </if>
+            <if test="@Ognl@isNotEmpty(serviceProce)">
+                service_proce = #{serviceProce},
+            </if>
+            <if test="@Ognl@isNotEmpty(serviceProcePeople)">
+                service_proce_people = #{serviceProcePeople},
+            </if>
+            <if test="@Ognl@isNotEmpty(serviceProceTime)">
+                service_proce_time = #{serviceProceTime},
+            </if>
+            <if test="@Ognl@isNotEmpty(serviceProceResult)">
+                service_proce_result = #{serviceProceResult},
+            </if>
+            <if test="@Ognl@isNotEmpty(myd) ">
+                myd = #{myd},
+            </if>
+            <if test="@Ognl@isNotEmpty(createPeople) ">
+                create_people = #{createPeople},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <!-- 
+    <select id="findCustomerFw" resultType="com.shsxt.vo.CustomerFw">
+    	select serve_Type, count(1) as amount from t_customer_serve GROUP BY serve_Type
+    </select>
+ -->
+ 
+</mapper>
