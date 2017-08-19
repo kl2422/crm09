@@ -42,7 +42,7 @@ function saveCustomer() {
                 closeCustomerDialog();
                 $("#dg").datagrid("reload");
             }else{
-                $.messager.alert("系统提示","保存失败！");
+                $.messager.alert("系统提示",result.resultMessage);
                 return;
             }
         }
@@ -64,11 +64,11 @@ function deleteCustomer() {
 		if (r) {
 			$.post('delete', {"ids": ids.join(",")}, function(resp) {
 				if (resp.resultCode == 1) {
-					alert(resp.resultMessage);
+					$.messager.alert(resp.resultMessage);
 					closeCustomerDialog();
 					$("#dg").datagrid("reload");
 				} else {
-					alert(resp.resultMessage);
+					$.messager.alert(resp.resultMessage);
 				}
 			});
 		}
