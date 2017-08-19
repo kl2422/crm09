@@ -131,7 +131,7 @@
 			t_customer t
 		WHERE
 			DATE_ADD(update_date, INTERVAL 6 MONTH) &lt;= NOW()
-			AND state = 0
+			AND state = 0 and is_valid = 1
 			AND id NOT IN (
 				SELECT
 					cus_id
@@ -152,9 +152,9 @@
 				FROM
 					t_customer_order
 				WHERE
-					DATE_ADD(update_date, INTERVAL 6 MONTH) &lt;= NOW()
+					DATE_ADD(order_date, INTERVAL 6 MONTH) &lt;= NOW()
 				)
-		and state = 0
+		and state = 0 and is_valid = 1
 	</select>
 	<!-- 
 	<select id="khgxReport" resultType="com.shsxt.vo.CustomerGx">

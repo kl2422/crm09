@@ -23,7 +23,6 @@ public class ContactService {
 		PageList<Contact> contacts = contactDao.selectForPage(query, query.buildPageBounds());
 		Paginator paginator = contacts.getPaginator(); // 分页对象
 		Map<String, Object> result = new HashMap<>();
-		result.put("paginator", paginator);
 		result.put("rows", contacts);
 		result.put("total", paginator.getTotalCount());
 		return result;

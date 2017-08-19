@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shsxt.crm.dao.CustomerLossDao">
+	
+	<insert id="insertBatch">
+        insert into t_customer_loss (
+          cus_no, cus_name, cus_manager, last_order_time, confirm_loss_time,
+          state, loss_reason, is_valid, create_date, update_date
+        ) values
+        <foreach collection="customerLosses" item="item" separator=",">
+        	(
+	          #{item.cusNo}, #{item.cusName}, #{item.cusManager}, #{item.lastOrderTime}, 
+	          null, 0, null, 1, now(), now()
+	        )
+        </foreach>
+    </insert>
+    
+    <sql id="CustomerLoss_Columns">
+        id, cus_no, cus_name, cus_manager, last_order_time, confirm_loss_time,
+        state, loss_reason, is_valid, create_date, update_date
+    </sql>
+    
+    <select id="selectForPage" resultType="CustomerLoss">
+        select <include refid="CustomerLoss_Columns" /> from t_customer_loss
+        <where>
+            is_valid = 1
+            <if test="@Ognl@isNotEmpty(cusName)">
+                and cus_name like '%${cusName}%'
+            </if>
+            <if test="@Ognl@isNotEmpty(cusManager)">
+                and cus_manager like '%${cusManager}%'
+            </if>
+            <if test="@Ognl@isNotEmpty(state)">
+                and state = #{state}
+            </if>
+        </where>
+    </select>
+    
+    <select id="loadById" resultType="CustomerLoss">
+        select <include refid="CustomerLoss_Columns" /> from t_customer_loss
+        <where>
+            is_valid = 1 and id = #{id}
+        </where>
+    </select>
+    
+    <update id="update">
+        update t_customer_loss
+        <set>
+                confirm_loss_time = now(),
+            <if test="@Ognl@isNotEmpty(lossReason)">
+                loss_reason = #{lossReason},
+            </if>
+            <if test="state != null ">
+                state = #{state},
+            </if>
+            update_date = now()
+        </set>
+        where id = #{id}
+    </update>
+	
+</mapper>

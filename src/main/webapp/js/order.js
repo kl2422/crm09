@@ -14,9 +14,6 @@ function formatAction(val, row) {
 
 // 打开详情窗体
 function openOrderDetailsDialog(orderId) {
-//	$.ajax({url: "detail",dataType: 'json', data:{}, async:false, success: function() {
-//		
-//	}});
 	// 加载详细数据
     $.post("detail", {orderId : orderId},function(result) {
         $("#fm").form('load', result);
@@ -26,11 +23,7 @@ function openOrderDetailsDialog(orderId) {
             $("#state").val("已回款");
         }
     });
-    // 加载总金额
-    $.post(ctx + "order_details/getTotalPrice", {orderId : orderId}, function(result) {
-        $("#totalMoney").val(result.result);
-    });
- 
+    
     // 加载详细列表数据
     $("#dg2").datagrid('load',{
         "orderId":orderId
