@@ -14,8 +14,11 @@ import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.shsxt.crm.dao.CustomerDao;
 import com.shsxt.crm.dto.CustomerQuery;
+import com.shsxt.crm.dto.KhgxQuery;
 import com.shsxt.crm.model.Customer;
 import com.shsxt.crm.util.AssertUtil;
+import com.shsxt.crm.vo.CustomerGc;
+import com.shsxt.crm.vo.CustomerGx;
 import com.shsxt.crm.vo.CustomerVO;
 
 @Service
@@ -107,6 +110,19 @@ public class CustomerService {
 		Customer customer = customerDao.findById(id);
 		AssertUtil.notNull(customer, "该客户不存在");
 		return customer;
+	}
+
+	public Map<String, Object> findKhgx(KhgxQuery query) {
+		PageList<CustomerGx> customerGxs = customerDao.khgxReport(query, query.buildPageBounds());
+		Map<String, Object> result = new HashMap<>();
+		result.put("rows", customerGxs);
+		result.put("total", customerGxs.getPaginator().getTotalCount());
+		return result;
+	}
+
+	public List<CustomerGc> findKhgc() {
+		List<CustomerGc> result = customerDao.khgcReport();
+		return result;
 	}
 
 }

@@ -2,6 +2,7 @@ package com.shsxt.crm.service;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.shsxt.crm.dao.CustomerServeDao;
 import com.shsxt.crm.dto.CustomerServeQuery;
 import com.shsxt.crm.model.CustomerServe;
 import com.shsxt.crm.util.AssertUtil;
+import com.shsxt.crm.vo.CustomerFw;
 
 @Service
 public class CustomerServeService {
@@ -73,6 +75,7 @@ public class CustomerServeService {
 	}
 	
 	
-	
-	
+	public List<CustomerFw> findCustomerFw() {
+		return customerServeDao.findCustomerFw();
+	}
 }

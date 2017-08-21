@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.shsxt.crm.base.BaseController;
 import com.shsxt.crm.base.ResultInfo;
+import com.shsxt.crm.dto.DataDicQuery;
 import com.shsxt.crm.model.DataDic;
 import com.shsxt.crm.service.DataDicService;
 
@@ -27,9 +28,15 @@ public class DataDicController extends BaseController {
 	}
 	
 	@RequestMapping("list")
-	@ResponseBody
-	public Map<String, Object> list() {
-		return null;
+	public @ResponseBody Map<String, Object> selectForPage(DataDicQuery dataDicQuery) {
+		Map<String, Object> result = dataDicService.selectForPage(dataDicQuery);
+		return result;
+	}
+	
+	@RequestMapping("find_all")
+	public @ResponseBody List<DataDic> findDataDicName() {
+		List<DataDic> result = dataDicService.findAll();
+		return result;
 	}
 	
 	@RequestMapping("add")

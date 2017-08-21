@@ -16,6 +16,33 @@
 	<slf4j.version>1.7.2</slf4j.version>
   </properties>
   
+  <profiles>
+       <!-- 开发人员测profile -->
+       <profile>
+           <id>dev</id>
+           <properties>
+               <env>dev</env>
+           </properties>
+           <activation>
+               <activeByDefault>true</activeByDefault>
+           </activation>
+       </profile>
+       <!-- 生产环境下的profile -->
+       <profile>
+           <id>product</id>
+           <properties>
+               <env>product</env>
+           </properties>
+       </profile>
+       <profile>
+           <id>test</id>
+           <properties>
+               <env>test</env>
+           </properties>
+       </profile>
+       
+   </profiles>
+  
   <dependencies>
   	
   	<!-- spring web -->
@@ -166,7 +193,7 @@
      <!-- 资源文件的设置 -->
     <resources>
     	<resource>
-        	<directory>src/main/resources</directory>
+        	<directory>src/main/resources/${env}</directory>
         </resource>
         <resource>
              <directory>src/main/java</directory>

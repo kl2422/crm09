@@ -42,7 +42,8 @@ public class PermissionProxy {
 		
 		// 判断如果是登录页面就不需要走验证
 		String uri = request.getRequestURI();
-		if ("/index".equals(uri) || "/user/login".equals(uri)) {
+		if ("/index".equals(uri) || "/user/login".equals(uri) 
+				|| "/logout".equals(uri)) {
 			return;
 		}
 		

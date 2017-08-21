@@ -16,7 +16,7 @@ public class LoginUserUtil {
 	 * @return
 	 */
 	public static Integer releaseUserIdFromCookie(HttpServletRequest request) {
-		String userIdString = CookieUtil.getCookieValue(request, "userId");
+		String userIdString = CookieUtil.getCookieValue(request, "userIdString");
 		if (StringUtils.isBlank(userIdString)) {
 			return null;
 		}

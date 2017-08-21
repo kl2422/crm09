@@ -74,7 +74,7 @@
     				} else {
     					// 登录成功
     					//alert(resp.resultMessage);
-    					$.cookie("userId", resp.result.userIdString);
+    					$.cookie("userIdString", resp.result.userIdString);
     					$.cookie("userName", resp.result.userName);
     					$.cookie("realName", resp.result.realName);
     					window.location.href = "${ctx}/main"

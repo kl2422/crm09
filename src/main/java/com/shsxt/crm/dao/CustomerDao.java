@@ -9,7 +9,10 @@ import org.apache.ibatis.annotations.Update;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.shsxt.crm.dto.CustomerQuery;
+import com.shsxt.crm.dto.KhgxQuery;
 import com.shsxt.crm.model.Customer;
+import com.shsxt.crm.vo.CustomerGc;
+import com.shsxt.crm.vo.CustomerGx;
 import com.shsxt.crm.vo.CustomerVO;
 
 public interface CustomerDao {
@@ -42,9 +45,11 @@ public interface CustomerDao {
 	
 	@Update("update t_customer set state = 1, update_date = now() where khno = #{cusNo}")
 	void updateLossState(@Param(value="cusNo")String cusNo);
+
 	
-//	PageList<CustomerGx> khgxReport(ReportGxQuery query, PageBounds pageBounds);
-//
-//	List<CustomerGc> khgcReport();
+	PageList<CustomerGx> khgxReport(KhgxQuery query, PageBounds pageBounds);
+
+	List<CustomerGc> khgcReport();
+
 
 }

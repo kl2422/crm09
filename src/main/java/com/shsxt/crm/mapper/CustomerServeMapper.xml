@@ -92,10 +92,9 @@
         </set>
         where id = #{id}
     </update>
-    <!-- 
-    <select id="findCustomerFw" resultType="com.shsxt.vo.CustomerFw">
+    
+    <select id="findCustomerFw" resultType="com.shsxt.crm.vo.CustomerFw">
     	select serve_Type, count(1) as amount from t_customer_serve GROUP BY serve_Type
     </select>
- -->
  
 </mapper>

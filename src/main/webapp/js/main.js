@@ -68,7 +68,9 @@ function logout() {
             $.removeCookie("userIdString");
             $.removeCookie("userName");
             $.removeCookie("realName");
-            window.location.href = "index";
+            $.get("logout",{}, function() {
+            	window.location.href = "index";
+            });
         }
     });
 }
